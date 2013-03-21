@@ -69,6 +69,11 @@ class Sortable implements EventSubscriberInterface
             if (count($parts) != 2) {
                 throw new UnexpectedValueException('Invalid sort key came by request, should be example: "article.title"');
             }
+			
+			if(!isset($params[$directionKey]))
+			{
+				$params[$directionKey] = 'asc';
+			}
 
             $query->setHint(OrderByWalker::HINT_PAGINATOR_SORT_ALIAS, current($parts))
                 ->setHint(OrderByWalker::HINT_PAGINATOR_SORT_DIRECTION, (stripos($params[$directionKey], 'desc') === false) ? 'ASC' : 'DESC')
